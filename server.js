@@ -2,7 +2,7 @@ import express from "express";
 // Ermöglicht den Zugriff auf die Daten in der .env-Datei über process.env.
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
+import userRoutes from "./routes/user.js";
 import { connect } from "./db.js";
 
 dotenv.config();

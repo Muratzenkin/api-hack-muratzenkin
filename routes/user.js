@@ -41,14 +41,40 @@ router.get("/users", authenticate, async (req, res) => {
 
   //  Dient zur Erstellung eines dynamischen Abfrageobjekts. Dieses Objekt wird für die Abfrage von Benutzern in MongoDB verwendet.
   let query = {};
+
+  // Filterzugriffskontrolle für Administratoren
+  if (filter === "admins" && req.user.role !== "admin") {
+    return res.status(403).json({ message: "Not authorized to view admins" });
+  }
   // { $exists: true }: prüft, ob das Bio-Feld existiert.
   // $ne: null: prüft, ob das Bio-Feld nicht leer ist (null).
   if (filter === "bio") query.bio = { $exists: true, $ne: null };
-  if (filter === "admins") query.role = "admin";
+  if (filter === "admins") {
+    if (req.user.role !== "admin") {
+      return res
+        .status(403)
+        .json({ message: "Not authorized to filter by admins" });
+    }
+    query.role = "admin";
+  }
 
   const users = await User.find(query)
     .skip((page - 1) * perPage)
-    .limit(perPage);
+    .limit(perPage)
+    .sort({ _id: 1 });
+
+  const userData = users.map((user) => {
+    const userObj = {
+      username: user.username,
+      bio: user.bio,
+    };
+    // Admin kullanıcılar e-posta ve adres bilgilerini görebilir
+    if (req.user.role === "admin") {
+      userObj.email = user.email;
+      userObj.address = user.address;
+    }
+    return userObj;
+  });
   // res.json(users): Gibt die als Ergebnis der Abfrage erhaltene Benutzerliste im JSON-Format an den Client zurück.
   res.json(users);
 });

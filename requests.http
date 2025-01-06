@@ -1,0 +1,26 @@
+@host=http://localhost:4000
+
+### ALL USERS
+GET {{host}}/users/users
+Authorization: Bearer 123456789
+
+### FILTERED USERS
+GET {{host}}/users?filter=username
+
+### LOGIN USER
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "Garnet900",
+  "password": "netsuke-procurement-agreement"
+}
+
+### LOGIN ADMIN
+POST {{host}}/login
+Content-Type: application/json
+
+{
+  "username": "Ethelyn286",
+  "password": "napkin-instructor-handover"
+}
