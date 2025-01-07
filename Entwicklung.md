@@ -13,7 +13,7 @@ npm install express mongoose bcrypt jsonwebtoken body-parser dotenv nodemon
         auth.js
         users.js
     .env
-    app.js
+    server.js
 
 ```
 
@@ -28,9 +28,7 @@ JWT_SECRET=your_jwt_secret_key
 
 toJSON-Methode: Die Felder password und \_\_v werden in der JSON-Ausgabe weggelassen. Dies ist wichtig, um Kennwörter beim Export von Benutzerdaten zu schützen.
 
-# API Dokumentation
-
-## Authentifizierung
+### Authentifizierung
 
 ### POST /auth/login
 
