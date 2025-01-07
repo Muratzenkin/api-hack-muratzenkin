@@ -16,7 +16,7 @@ app.use(express.json());
 // POST /auth/login
 // GET /users/:benutzername
 app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 const port = 4000;
 app.listen(port, () => console.log(`Server is running on port ${port}`));

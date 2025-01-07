@@ -1,26 +1,69 @@
 @host=http://localhost:4000
 
-### ALL USERS
-GET {{host}}/users/users
-Authorization: Bearer 123456789
-
-### FILTERED USERS
-GET {{host}}/users?filter=username
-
 ### LOGIN USER
-POST {{host}}/login
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "Garnet900",
-  "password": "netsuke-procurement-agreement"
+  "username": "user3",
+  "password": "password123"
 }
 
 ### LOGIN ADMIN
-POST {{host}}/login
+POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "Ethelyn286",
-  "password": "napkin-instructor-handover"
+  "username": "user1",
+  "password": "password123"
+}
+
+### ALL USERS
+GET {{host}}/api/users
+Authorization: Bearer <YOUR_JWT_TOKEN>
+
+### FILTERED USERS (BIO)
+GET {{host}}/api/users?filter=bio
+Authorization: Bearer <YOUR_JWT_TOKEN>
+
+### FILTERED USERS (ADMINS)
+GET {{host}}/api/users?filter=admins
+Authorization: Bearer <YOUR_JWT_TOKEN>
+
+### GET USER BY USERNAME
+GET {{host}}/api/users/:username
+Authorization: Bearer <YOUR_JWT_TOKEN>
+
+### CREATE USER (ADMIN ONLY)
+POST {{host}}/api/users
+Content-Type: application/json
+Authorization: Bearer <YOUR_JWT_TOKEN>
+
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "newpassword",
+  "bio": "This is a new user",
+  "address": {
+    "streetName": "New Street",
+    "streetNumber": 123,
+    "city": "New City",
+    "zipCode": 12345
+  },
+  "role": "user"
+}
+
+### UPDATE USER (SELF OR ADMIN)
+PATCH {{host}}/api/users/:username
+Content-Type: application/json
+Authorization: Bearer <YOUR_JWT_TOKEN>
+
+{
+  "bio": "Updated bio",
+  "address": {
+    "streetName": "Updated Street",
+    "streetNumber": 456,
+    "city": "Updated City",
+    "zipCode": 67890
+  }
 }

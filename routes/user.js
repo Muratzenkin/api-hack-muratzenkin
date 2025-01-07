@@ -29,7 +29,7 @@ const authenticate = (req, res, next) => {
 //TODO Auflistung der Benutzer (Paging und Filterung)
 // Über einen GET /users-Endpunkt kann ein autorisierter Benutzer die Benutzerliste abrufen, indem er sie nach bestimmten Kriterien filtert und paginiert.
 // authentifizieren: Middleware-Funktion. Sie prüft, ob der Anfragende autorisiert ist. Wenn das Token nicht gültig ist oder fehlt, gibt diese Middleware einen Fehler zurück und die eigentliche Funktion wird nicht ausgeführt.
-router.get("/users", authenticate, async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   // req.query: Ruft die Abfrageparameter (z. B.?page=2&filter=admins) aus der URL der Anfrage ab.
   // page: Stellt die aktuelle Seite für das Paging dar. Wenn page in der URL nicht angegeben ist, wird standardmäßig 1 zugewiesen.
   // Filter: Ein Kriterium, das zum Filtern der Benutzerliste verwendet wird. Zum Beispiel:
@@ -76,7 +76,7 @@ router.get("/users", authenticate, async (req, res) => {
     return userObj;
   });
   // res.json(users): Gibt die als Ergebnis der Abfrage erhaltene Benutzerliste im JSON-Format an den Client zurück.
-  res.json(users);
+  res.json(userData);
 });
 
 //TODO Benutzer anlegen (nur Admin kann neue Benutzer hinzufügen)
